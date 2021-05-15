@@ -33,7 +33,24 @@
 				align-items: center;
 				transition: all 2s ;
 				border-radius: 50%;
-				background-size: cover;
+			}
+			.wrap div:nth-child(1) span{
+				background-position: -290px -100px;
+			}
+			.wrap div:nth-child(2) span {
+				background-position: -565px -28px;
+			}
+			.wrap div:nth-child(3) span {
+				background-position: -764px -228px;
+			}
+			.wrap div:nth-child(4) span {
+				background-position: -692px -500px;
+			}
+			.wrap div:nth-child(5) span {
+				background-position: -419px -574px;
+			}
+			.wrap div:nth-child(6) span {
+				background-position: -219px -372px;
 			}
 			.wraper {
 				width: 1080px;
@@ -69,22 +86,43 @@
 			let colorArr = ['black','yellow','blue','aqua','saddlebrown','cadetblue']
 			let wraper = document.querySelector('.wraper')
 			console.log([wrap]);
+			let count = true
+			let cache = {
+				el:'',
+				index:0
+			};
 			[].forEach.call(wrap.children,function(item,index){
 				item.style.transform=`rotate(${index*60}deg)`
 				item.children[0].style.transform='rotate(-'+(index*60)+'deg) scale(.5)'
 				item.children[0].style.backgroundImage=`url(./img/${index+1}.jpeg)`
 				item.onmousemove = function(){
+					if(item.children[0]==cache.el){
+						return
+					}
+					if(count){
+						count = false
+						setTimeout(function(){
+							count = true
+						},2000)
+					}else{
+						return
+					}
 					item.children[0].style.transform='rotate(-'+(index*60)+'deg) scale(1)'
 					wraper.style.backgroundImage=`url(./img/${index+1}.jpeg)`
 					wraper.style.backgroundPosition = '0 0'
-					wrap.style.opacity = 0
+					if(cache.el){
+						cache.el.style.transform='rotate(-'+(cache.index*60)+'deg) scale(.5)'
+						console.log(cache);
+					}
+					cache.el = item.children[0]
+					cache.index = index
 				}
-				item.onmouseleave = function(){
-					item.children[0].style.transform='rotate(-'+(index*60)+'deg) scale(.5)'
-					// wraper.style.backgroundImage=`url()`
-					wraper.style.backgroundPosition = '0 0'
-					wrap.style.opacity = 1
-				}
+				// item.onmouseleave = function(){
+				// 	item.children[0].style.transform='rotate(-'+(index*60)+'deg) scale(.5)'
+				// 	// wraper.style.backgroundImage=`url()`
+				// 	wraper.style.backgroundPosition = '0 0'
+				// 	item.children[0].style.opacity = 1
+				// }
 			})
 		</script>
 	</body>
